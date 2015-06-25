@@ -9,13 +9,13 @@ abstract class BaseIssuesController extends BaseController
         $this->db = new IssueModel();
     }
 
-    protected function getIssues($page = 1, $pageSize = 6, $stateId = null)
+    protected function getIssues($page = 1, $pageSize = 6, $stateId = null, $query = null)
     {
         $from = ($page - 1) * $pageSize;
         $this->page = $page;
         $this->pageSize = $pageSize;
 
-        $issuesData = $this->db->getIssues($from, $pageSize, $stateId);
+        $issuesData = $this->db->getIssues($from, $pageSize, $stateId, $query);
 
         $this->issueStates = $this->db->getIssueStates();
         $this->issues = $issuesData['fetched_issues'];

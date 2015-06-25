@@ -2,7 +2,7 @@
 
 class IssueModel extends BaseModel
 {
-    public function getIssues($page, $pageSize, $issueStateId)
+    public function getIssues($page, $pageSize, $issueStateId, $searchQuery)
     {
         $query = 'SELECT SQL_CALC_FOUND_ROWS i.id, i.title, i.submit_date, u.username, s.state_type
                                         FROM issues as i
@@ -11,7 +11,11 @@ class IssueModel extends BaseModel
                                         INNER JOIN states as s
                                         ON s.id = i.state_id';
 
-        if($issueStateId !== null) {
+        if ($issueStateId !== null && $searchQuery !== null) {
+            $query .= ' WHERE i.state_id = ? AND i.title LIKE ?';
+        } else if ($issueStateId === null && $searchQuery !== null) {
+            $query .= ' WHERE i.title LIKE ?';
+        } else if ($searchQuery === null && $issueStateId !== null) {
             $query .= ' WHERE i.state_id = ?';
         }
 
@@ -21,10 +25,16 @@ class IssueModel extends BaseModel
         $statement = self::$db->prepare($query);
 
         //todo improve this
-        if($issueStateId === null) {
+        if ($issueStateId === null && $searchQuery === null) {
             $statement->bind_param('ii', $page, $pageSize);
-        } else {
+        } else if ($issueStateId !== null && $searchQuery === null) {
             $statement->bind_param('iii', $issueStateId, $page, $pageSize);
+        } else if ($issueStateId === null && $searchQuery !== null) {
+            $searchQuery = '%' . $searchQuery . '%';
+            $statement->bind_param('sii', $searchQuery, $page, $pageSize);
+        } else {
+            $searchQuery = '%' . $searchQuery . '%';
+            $statement->bind_param('isii', $issueStateId, $searchQuery, $page, $pageSize);
         }
 
         $statement->execute();
