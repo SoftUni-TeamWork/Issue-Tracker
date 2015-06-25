@@ -18,7 +18,7 @@
         <label for="description" class="col-md-2 control-label">Description: </label>
 
         <div class="col-md-10">
-            <textarea name="description" id="description" class="form-control" cols="30" rows="5"><?= $this->issue['description'] ?></textarea>
+            <textarea name="description" id="description" class="form-control" cols="30" rows="5"><?= htmlspecialchars($this->issue['description']) ?></textarea>
             <span class="field-validation-valid text-danger"></span>
         </div>
     </div>
@@ -27,10 +27,9 @@
 
         <div class="col-md-10">
             <!--            <input type="password" class="form-control" id="confirm-password" name="confirm-password" />-->
-            <select name="state" id="state" class="form-control">
+            <select name="state-id" id="state" class="form-control">
                 <?php foreach ($this->issueStates as $issueState) : ?>
-                    <option
-                        value="<?= $issueState['id'] ?>" <?php if ($issueState['state_type'] == $this->issue['state_type']) {
+                    <option value="<?= $issueState['id'] ?>" <?php if ($issueState['state_type'] == $this->issue['state_type']) {
                         echo 'selected';
                     } ?>><?= $issueState['state_type'] ?></option>
                 <?php endforeach; ?>
@@ -40,7 +39,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register"/>
+            <input type="submit" class="btn btn-default" value="Edit"/>
         </div>
     </div>
 </form>

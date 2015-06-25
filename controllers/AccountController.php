@@ -42,7 +42,6 @@ class AccountController extends BaseController {
                 $this->redirect('account', 'register');
             }
 
-
             $password = $_POST['password'];
             $isRegistered = $this->db->register($username, $password);
 
