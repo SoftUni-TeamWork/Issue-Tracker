@@ -2,9 +2,10 @@
 
 class IssuesController extends BaseIssuesController
 {
-    public function all($page)
+    public function all($page = 1, $pageSize = 6)
     {
-        $this->getIssues($page);
+        $stateId = $_GET['state'];
+        $this->getIssues($page, $pageSize, $stateId);
         $this->title = 'All issues';
         $this->renderView(__FUNCTION__);
     }

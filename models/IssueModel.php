@@ -2,17 +2,31 @@
 
 class IssueModel extends BaseModel
 {
-    public function getIssues($page, $pageSize)
+    public function getIssues($page, $pageSize, $issueStateId)
     {
-        $statement = self::$db->prepare('SELECT SQL_CALC_FOUND_ROWS i.id, i.title, i.submit_date, u.username, s.state_type
+        $query = 'SELECT SQL_CALC_FOUND_ROWS i.id, i.title, i.submit_date, u.username, s.state_type
                                         FROM issues as i
                                         INNER JOIN users as u
                                         ON u.id = i.author_id
                                         INNER JOIN states as s
-                                        ON s.id = i.state_id
-                                        ORDER BY i.submit_date
-                                        LIMIT ?, ?');
-        $statement->bind_param('ii', $page, $pageSize);
+                                        ON s.id = i.state_id';
+
+        if($issueStateId !== null) {
+            $query .= ' WHERE i.state_id = ?';
+        }
+
+        $query .= ' ORDER BY i.submit_date LIMIT ?, ?';
+
+
+        $statement = self::$db->prepare($query);
+
+        //todo improve this
+        if($issueStateId === null) {
+            $statement->bind_param('ii', $page, $pageSize);
+        } else {
+            $statement->bind_param('iii', $issueStateId, $page, $pageSize);
+        }
+
         $statement->execute();
         $result = $statement->get_result();
 
