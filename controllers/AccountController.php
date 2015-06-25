@@ -5,6 +5,17 @@ class AccountController extends BaseController {
 
     public function onInit() {
         $this->db = new AccountModel();
+        if(stripos($_SERVER['HTTP_REFERER'], 'Account') === false) {
+            $_SESSION['returnUrl'] = $_SERVER['HTTP_REFERER'];
+        }
+    }
+
+    private function getReturnUrl(){
+        if($_SESSION['returnUrl']) {
+            return $_SESSION['returnUrl'];
+        } else {
+            return '/';
+        }
     }
 
     public function register() {
@@ -22,7 +33,8 @@ class AccountController extends BaseController {
 
             if ($isRegistered) {
                 $_SESSION['username'] = $username;
-                $this->redirectToUrl('/');
+                $this->redirectToUrl($this->getReturnUrl());
+                unset($_SESSION['returnUrl']);
             } else {
                 $this->addErrorMessage('Register failed.');
             }
@@ -40,8 +52,8 @@ class AccountController extends BaseController {
 
             if($isLoggedIn) {
                 $_SESSION['username'] = $username;
-                $this->addInfoMessage('Successful login');
-                $this->redirect('books', 'index');
+                $this->redirectToUrl($_SESSION['returnUrl']);
+                unset($_SESSION['returnUrl']);
             } else {
                 $this->addErrorMessage('Login failed');
                 $this->redirect('account', 'login');
@@ -53,7 +65,7 @@ class AccountController extends BaseController {
 
     public function logout() {
         unset($_SESSION['username']);
-        $this->addInfoMessage('Successfully logout');
-        $this->redirectToUrl('/');
+        $this->redirectToUrl($this->getReturnUrl());
+        unset($_SESSION['returnUrl']);
     }
 }

@@ -2,10 +2,12 @@
 
 class IssueModel extends BaseModel {
     public function getIssues($page, $pageSize) {
-        $statement = self::$db->prepare('SELECT SQL_CALC_FOUND_ROWS i.id, i.title, i.submit_date, u.username
+        $statement = self::$db->prepare('SELECT SQL_CALC_FOUND_ROWS i.id, i.title, i.submit_date, u.username, s.state_type
                                         FROM issues as i
                                         INNER JOIN users as u
                                         ON u.id = i.author_id
+                                        INNER JOIN states as s
+                                        ON s.id = i.state_id
                                         ORDER BY i.submit_date
                                         LIMIT ?, ?');
         $statement->bind_param('ii', $page, $pageSize);
@@ -16,6 +18,23 @@ class IssueModel extends BaseModel {
             'fetched_issues' => $result->fetch_all(MYSQLI_ASSOC),
             'total_issues' => self::$db->query('SELECT FOUND_ROWS()')->fetch_row()[0]
         ];
+    }
+
+    public function getIssue($id){
+        $statement = self::$db->prepare('SELECT i.id, i.title, i.description, i.submit_date, u.username, s.state_type
+                                        FROM issues as i
+                                        INNER JOIN users as u
+                                        ON u.id = i.author_id
+                                        INNER JOIN states as s
+                                        ON s.id = i.state_id
+                                        WHERE i.id = ?');
+
+        $statement->bind_param('i', $id);
+        $statement->execute();
+
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
     }
 
     public function createUserAlbum($username, $name, $photosPaths) {
