@@ -5,8 +5,19 @@ class AccountController extends BaseController {
 
     public function onInit() {
         $this->db = new AccountModel();
+        $this->setReturnUrl();
+    }
+
+    private function setReturnUrl(){
         if(stripos($_SERVER['HTTP_REFERER'], 'Account') === false) {
-            $_SESSION['returnUrl'] = $_SERVER['HTTP_REFERER'];
+           $_SESSION['returnUrl'] = $_SERVER['HTTP_REFERER'];
+        }
+    }
+
+    private function logoutIfLogged() {
+        if($this->isLoggedIn) {
+            $_SESSION['returnUrl'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $this->redirect('account', 'logout');
         }
     }
 
@@ -19,6 +30,10 @@ class AccountController extends BaseController {
     }
 
     public function register() {
+        $this->logoutIfLogged();
+
+        $this->title = "Register";
+
         if ($this->isPost) {
             $username = $_POST['username'];
 
@@ -44,6 +59,10 @@ class AccountController extends BaseController {
     }
 
     public function login() {
+        $this->title = 'Login';
+
+        $this->logoutIfLogged();
+
         if($this->isPost) {
             $username = $_POST['username'];
             $password = $_POST['password'];
@@ -52,7 +71,7 @@ class AccountController extends BaseController {
 
             if($isLoggedIn) {
                 $_SESSION['username'] = $username;
-                $this->redirectToUrl($_SESSION['returnUrl']);
+                $this->redirectToUrl($this->getReturnUrl());
                 unset($_SESSION['returnUrl']);
             } else {
                 $this->addErrorMessage('Login failed');

@@ -15,7 +15,7 @@
 
     <p><?= htmlspecialchars($this->issue['description']) ?></p>
 
-    <?php if ($this->isLoggedIn && $this->issue['username'] == $this->user): ?>
+    <?php if ($this->isLoggedIn && $this->issue['username'] == $_SESSION['username']): ?>
     <a href="/issues/edit/<?= $this->issue['id'] ?>" class="btn btn-default">Edit</a>
     <?php endif; ?>
 </div>

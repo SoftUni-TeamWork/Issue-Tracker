@@ -1,8 +1,4 @@
-<?php
-    $this->title = 'Register';
-?>
-
-<h2><?= $this->title ?></h2>
+<h2><?= htmlspecialchars($this->title) ?></h2>
 
 <form action="/account/register" method="POST" class="form-horizontal" role="form">
 
@@ -20,14 +16,14 @@
     <div class="form-group">
         <label for="password" class="col-md-2 control-label">Password: </label>
         <div class="col-md-10">
-            <input type="text" class="form-control" id="password" name="password" />
+            <input type="password" class="form-control" id="password" name="password" />
             <span class="field-validation-valid text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="confirm-password" class="col-md-2 control-label">Confirm password: </label>
         <div class="col-md-10">
-            <input type="text" class="form-control" id="confirm-password" name="confirm-password" />
+            <input type="password" class="form-control" id="confirm-password" name="confirm-password" />
             <span class="field-validation-valid text-danger"></span>
         </div>
     </div>

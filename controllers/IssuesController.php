@@ -14,6 +14,17 @@ class IssuesController extends BaseIssuesController {
     }
 
     public function edit($id) {
+        $this->authorize();
+
+        $this->title = 'Edit';
+
+        $this->issue = $this->db->getIssue($id);
+        $this->issueStates = $this->db->getIssueStates();
+
+        if($this->isPost) {
+
+        }
+
         $this->renderView(__FUNCTION__);
     }
 }

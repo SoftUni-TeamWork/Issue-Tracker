@@ -34,7 +34,13 @@ class IssueModel extends BaseModel {
 
         $result = $statement->get_result();
 
-        return $result->fetch_all(MYSQLI_ASSOC)[0];
+        return $result->fetch_assoc();
+    }
+
+    public function getIssueStates() {
+        $result = self::$db->query('SELECT id, state_type FROM states');
+
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function createUserAlbum($username, $name, $photosPaths) {

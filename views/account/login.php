@@ -1,4 +1,3 @@
-<?php $this->title = 'Login' ?>
 <h2><?= htmlspecialchars($this->title) ?></h2>
 <div class="row">
     <div class="col-md-8">
@@ -19,7 +18,7 @@
                 <div class="form-group">
                     <label for="password" class="col-md-2 control-label">Password: </label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" id="password" name="password" />
+                        <input type="password" class="form-control" id="password" name="password" />
                         <span class="field-validation-valid text-danger"></span>
                     </div>
                 </div>

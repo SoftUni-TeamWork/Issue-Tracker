@@ -71,8 +71,8 @@ abstract class BaseController {
 
     public function authorize() {
         if(!$this->isLoggedIn) {
-            $this->addErrorMessage('Unauthorized');
-            $this->redirect('account, login');
+//            $this->addErrorMessage('Unauthorized');
+            $this->redirect('account', 'login');
         }
     }
 
