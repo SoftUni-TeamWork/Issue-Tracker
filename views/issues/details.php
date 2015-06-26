@@ -77,17 +77,16 @@
 <script type="text/javascript">
     $('#add-comment-form').on('submit', function (evt) {
         evt.preventDefault();
-        var $csrfName = $(this).find('input[name=CSRFName]'),
-            $csrfToken=$(this).find('input[name=CSRFToken]');
+//        var $csrfName = $(this).find('input[name=CSRFName]'),
+//            $csrfToken=$(this).find('input[name=CSRFToken]');
 
-        debugger;
         var $comment = $('#comment');
         var data = {
             comment:  $comment.val(),
             issueId: <?= $this->issue['id'] ?>,
-            username: '<?= $_SESSION['username'] ?>',
-            csrfName: $csrfName.val(),
-            csrfToken: $csrfToken.val()
+            username: '<?= $_SESSION['username'] ?>'
+            /*csrfName: $csrfName.val(),
+            csrfToken: $csrfToken.val()*/
         };
 
         $.ajax({

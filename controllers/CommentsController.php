@@ -11,7 +11,7 @@ class CommentsController extends BaseController {
         $this->authorize();
 
         if($this->isPost) {
-            $this->validateCsft($_POST['csrfName'], $_POST['csrfToken']);
+            //$this->validateCsft($_POST['csrfName'], $_POST['csrfToken']);
             
             $issueId = $_POST['issueId'];
             $username = $_POST['username'];
@@ -32,15 +32,15 @@ class CommentsController extends BaseController {
         }
     }
 
-    private function validateCsft($csfrName, $csfrToken){
-        $isValid = CsftGuard::validateToken($csfrName, $csfrToken);
-
-        if(!$isValid) {
-            echo json_encode([
-                'message' => 'Cannot add comment'
-            ]);
-            http_response_code(400);
-            die;
-        }
-    }
+//    protected function validateCsft($csfrName, $csfrToken){
+//        $isValid = CsftGuard::validateToken($csfrName, $csfrToken);
+//
+//        if(!$isValid) {
+//            echo json_encode([
+//                'message' => 'Cannot add comment'
+//            ]);
+//            http_response_code(400);
+//            die;
+//        }
+//    }
 }
