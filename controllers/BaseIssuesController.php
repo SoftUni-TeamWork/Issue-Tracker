@@ -1,16 +1,13 @@
 <?php
 
-abstract class BaseIssuesController extends BaseController
-{
+abstract class BaseIssuesController extends BaseController {
     protected $db;
 
-    public function onInit()
-    {
+    public function onInit() {
         $this->db = new IssueModel();
     }
 
-    protected function getIssues($page = 1, $pageSize = 6, $stateId = null, $query = null)
-    {
+    protected function getIssues($page = 1, $pageSize = 6, $stateId = null, $query = null) {
         $from = ($page - 1) * $pageSize;
         $this->page = $page;
         $this->pageSize = $pageSize;

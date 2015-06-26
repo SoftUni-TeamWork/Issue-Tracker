@@ -99,4 +99,12 @@ abstract class BaseController {
     function getValidationError($field) {
         return $this->validationError[$field];
     }
+
+    protected function validateCsft() {
+        $isValid = CsftGuard::validateToken($_POST['CSRFName'], $_POST['CSRFToken']);
+
+        if(!$isValid) {
+            $this->redirect("problem", "csrfvalidationfail");
+        }
+    }
 }

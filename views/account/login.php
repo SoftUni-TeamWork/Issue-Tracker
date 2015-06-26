@@ -3,8 +3,7 @@
     <div class="col-md-8">
         <section id="loginForm">
             <form action="/account/login" method="POST" class="form-horizontal" role="form">
-
-<!--                @Html.AntiForgeryToken()-->
+                <?php include(__DIR__ . '\..\layouts\default\csft-partial.php') ?>
                 <h4>Use a local account to log in.</h4>
                 <hr/>
                 <div class="text-danger validation-summary-errors"></div>

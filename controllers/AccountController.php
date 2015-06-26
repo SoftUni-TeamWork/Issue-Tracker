@@ -30,11 +30,11 @@ class AccountController extends BaseController {
     }
 
     public function register() {
-        $this->logoutIfLogged();
-
         $this->title = "Register";
 
         if ($this->isPost) {
+            $this->validateCsft();
+
             $username = $_POST['username'];
 
             if(!$username || mb_strlen($username) < 3) {
@@ -60,9 +60,9 @@ class AccountController extends BaseController {
     public function login() {
         $this->title = 'Login';
 
-        $this->logoutIfLogged();
-
         if($this->isPost) {
+            $this->validateCsft();
+
             $username = $_POST['username'];
             $password = $_POST['password'];
 
@@ -82,6 +82,7 @@ class AccountController extends BaseController {
     }
 
     public function logout() {
+        $this->validateCsft();
         unset($_SESSION['username']);
         $this->redirectToUrl($this->getReturnUrl());
         unset($_SESSION['returnUrl']);

@@ -2,7 +2,7 @@
 
 <form action="/account/register" method="POST" class="form-horizontal" role="form">
 
-<!--    @Html.AntiForgeryToken()-->
+    <?php include(__DIR__ . '\..\layouts\default\csft-partial.php') ?>
     <h4>Create a new account.</h4>
     <hr />
     <div class="text-danger validation-summary-errors"></div>
@@ -17,13 +17,6 @@
         <label for="password" class="col-md-2 control-label">Password: </label>
         <div class="col-md-10">
             <input type="password" class="form-control" id="password" name="password" />
-            <span class="field-validation-valid text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="confirm-password" class="col-md-2 control-label">Confirm password: </label>
-        <div class="col-md-10">
-            <input type="password" class="form-control" id="confirm-password" name="confirm-password" />
             <span class="field-validation-valid text-danger"></span>
         </div>
     </div>

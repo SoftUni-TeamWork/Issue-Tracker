@@ -2,7 +2,7 @@
 
 <form action="/issues/edit/<?= $this->issue['id'] ?>" method="POST" class="form-horizontal" role="form">
 
-    <!--    @Html.AntiForgeryToken()-->
+    <?php include(__DIR__ . '\..\layouts\default\csft-partial.php') ?>
     <h4>Update issue</h4>
     <hr/>
     <div class="text-danger validation-summary-errors"></div>
@@ -26,7 +26,6 @@
         <label for="State" class="col-md-2 control-label">State: </label>
 
         <div class="col-md-10">
-            <!--            <input type="password" class="form-control" id="confirm-password" name="confirm-password" />-->
             <select name="state-id" id="state" class="form-control">
                 <?php foreach ($this->issueStates as $issueState) : ?>
                     <option value="<?= $issueState['id'] ?>" <?php if ($issueState['state_type'] == $this->issue['state_type']) {

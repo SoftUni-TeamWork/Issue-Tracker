@@ -1,11 +1,9 @@
 <?php if ($this->isLoggedIn): ?>
     <form action="/account/logout" method="POST" id="logoutForm">
-<!--        @Html.AntiForgeryToken()-->
+        <?php include(__DIR__ . '\csft-partial.php') ?>
 
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="/issues/me" title="Manage">Hello <?= htmlspecialchars($_SESSION['username']) ?>!</a>
-            </li>
+            <li><a href="#">Hello <?= htmlspecialchars($_SESSION['username']) ?>!</a></li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     </form>

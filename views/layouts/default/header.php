@@ -6,6 +6,9 @@
     <title><?= htmlspecialchars($this->title) ?></title>
     <link rel="stylesheet" href="/content/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/content/css/Site.css"/>
+
+    <script type="text/javascript" src="/content/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/content/js/bootstrap.js"></script>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
